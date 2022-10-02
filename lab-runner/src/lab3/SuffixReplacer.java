@@ -4,8 +4,8 @@ import tasks.Task;
 import utils.ConsoleUtils;
 
 public class SuffixReplacer extends Task {
-    private String suffixToReplace = "ing";
-    private String newSuffix = "ed";
+    private final String SUFFIX_TO_REPLACE = "ing";
+    private final String NEW_SUFFIX = "ed";
     private final static String spaceRegex = " +";
 
     @Override
@@ -16,10 +16,6 @@ public class SuffixReplacer extends Task {
     }
 
     String replaceEndings(String expression) {
-        var newStr = expression.replace(suffixToReplace + " ", newSuffix + " ");
-        if (newStr.endsWith(suffixToReplace)) {
-            newStr = newStr.substring(0, newStr.length() - suffixToReplace.length()) + newSuffix;
-        }
-        return newStr;
+        return expression.replace("[.*]ing ", "$1ed");
     }
 }

@@ -1,10 +1,10 @@
-package lab4;
+package lab4.bst;
 
 import java.util.function.Consumer;
 
 public class BinaryTreeNode<K extends Comparable<K>, V> {
-    public K key;
-    public V value;
+    K key;
+    V value;
 
     @Override
     public String toString() {
@@ -20,6 +20,14 @@ public class BinaryTreeNode<K extends Comparable<K>, V> {
     BinaryTreeNode(K key, V value) {
         this.key = key;
         this.value = value;
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
     }
 
     void insert(K key, V value) {
@@ -61,33 +69,33 @@ public class BinaryTreeNode<K extends Comparable<K>, V> {
         return right.findByKey(k);
     }
 
-    void rootLeftRightTraverse(Consumer<BinaryTreeNode<K, V>> function) {
+    void preorderTraverse(Consumer<BinaryTreeNode<K, V>> function) {
         function.accept(this);
         if (left != null) {
-            left.rootLeftRightTraverse(function);
+            left.preorderTraverse(function);
         }
         if (right != null) {
-            right.rootLeftRightTraverse(function);
+            right.preorderTraverse(function);
         }
     }
 
-    void leftRightRootTraverse(Consumer<BinaryTreeNode<K, V>> function) {
+    void postorderTraverse(Consumer<BinaryTreeNode<K, V>> function) {
         if (left != null) {
-            left.leftRightRootTraverse(function);
+            left.postorderTraverse(function);
         }
         if (right != null) {
-            right.leftRightRootTraverse(function);
+            right.postorderTraverse(function);
         }
         function.accept(this);
     }
 
-    void leftRootRightTraverse(Consumer<BinaryTreeNode<K, V>> function) {
+    void inorderTraverse(Consumer<BinaryTreeNode<K, V>> function) {
         if (left != null) {
-            left.leftRootRightTraverse(function);
+            left.inorderTraverse(function);
         }
         function.accept(this);
         if (right != null) {
-            right.leftRootRightTraverse(function);
+            right.inorderTraverse(function);
         }
     }
 }

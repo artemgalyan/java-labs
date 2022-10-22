@@ -7,15 +7,17 @@ public class ConsoleUtils {
         if (text != null) {
             System.out.print(text);
         }
-        var scanner = new Scanner(System.in);
+        Scanner scanner = ScannerPool.get(System.in);
         return scanner.nextLine();
     }
 
-    public static double inputNumber(String text) {
+    public static double inputNumberLine(String text) {
         if (text != null) {
             System.out.print(text);
         }
-        var scanner = new Scanner(System.in);
-        return scanner.nextDouble();
+        Scanner scanner = ScannerPool.get(System.in);
+        var d = scanner.nextDouble();
+        scanner.nextLine();
+        return d;
     }
 }

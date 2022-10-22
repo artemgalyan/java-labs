@@ -1,28 +1,37 @@
 package lab3;
 
 import tasks.Task;
-import utils.ConsoleUtils;
+import utils.UserDataInput;
 
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.StringTokenizer;
 
-public class ExpressionCounter extends Task {
+public class ExpressionCounter implements Task {
     private static final String xString = "x";
 
     @Override
     public void run() {
-        String expression = ConsoleUtils.inputString("Input expression: ");
+        String expression = UserDataInput.inputString("Input expression");
+        if (checkInputForNull(expression))
+            return;
+
         if (expression.contains(xString)) {
-            int x = (int)ConsoleUtils.inputNumber("Input x: ");
+            int x = 0;
+            try {
+                x = UserDataInput.inputInt("Input x: ");
+            } catch (IOException e) {
+                System.out.println("Wrong input!");
+                return;
+            }
             expression = expression.replaceAll(xString, Integer.toString(x));
         }
-        System.out.println("Result is " + evaluate_with_tokenizer(expression));
+        printResults(expression, Integer.toString(evaluateWithTokenizer(expression)));
     }
 
-    private int evaluate_with_tokenizer(String expression) {
+    private int evaluateWithTokenizer(String expression) {
         if (expression.startsWith("-") || expression.startsWith("+"))
             expression = "0" + expression;
-        var tokenizer = new StringTokenizer(expression, "+-", true);
+        StringTokenizer tokenizer = new StringTokenizer(expression, "+-", true);
         int result = 0;
         boolean plus = true;
         while (tokenizer.hasMoreTokens()) {

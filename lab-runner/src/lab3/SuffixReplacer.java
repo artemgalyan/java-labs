@@ -1,18 +1,15 @@
 package lab3;
 
 import tasks.Task;
-import utils.ConsoleUtils;
+import utils.UserDataInput;
 
-public class SuffixReplacer extends Task {
-    private final String SUFFIX_TO_REPLACE = "ing";
-    private final String NEW_SUFFIX = "ed";
-    private final static String spaceRegex = " +";
-
+public class SuffixReplacer implements Task {
     @Override
     public void run() {
-        var expression = ConsoleUtils.inputString("Input text: ");
-        System.out.println("Result is: " + replaceEndings(expression));
-        tryAgain();
+        String expression = UserDataInput.inputString();
+        if (checkInputForNull(expression))
+            return;
+        printResults(expression, replaceEndings(expression));
     }
 
     String replaceEndings(String expression) {

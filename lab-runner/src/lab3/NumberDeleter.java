@@ -1,15 +1,17 @@
 package lab3;
 
 import tasks.Task;
-import utils.ConsoleUtils;
+import utils.UserDataInput;
 
-public class NumberDeleter extends Task {
+public class NumberDeleter implements Task {
     @Override
     public void run() {
-        var str = ConsoleUtils.inputString("Input string: ");
-        var result = str.replaceAll("((?<=[ ,.])|(?=\\A))(\\d+)((?=\\z)|(?=[ ,.]))", "");
-        System.out.println("Result is: " + result);
-        tryAgain();
+        String str = UserDataInput.inputString();
+        if (checkInputForNull(str)) {
+            return;
+        }
+        String result = str.replaceAll("((?<=[ ,.])|(?=\\A))(\\d+)((?=\\z)|(?=[ ,.]))", "");
+        printResults(str, result);
     }
 
 }

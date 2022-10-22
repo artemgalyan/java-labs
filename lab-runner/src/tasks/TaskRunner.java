@@ -1,13 +1,13 @@
 package tasks;
 
 import utils.ConsoleUtils;
+import utils.ScannerPool;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.SortedMap;
 
 public class TaskRunner {
     private final List<TaskPackage> packages;
@@ -34,13 +34,13 @@ public class TaskRunner {
             System.out.println("Packages are empty! Nothing to run");
             return;
         }
-        var names = packages.stream().map(TaskPackage::getName).toList();
+        List<String> names = packages.stream().map(TaskPackage::getName).toList();
         System.out.println("Select package to run: ");
         System.out.println("0. Exit");
         for (int i = 1; i <= names.size(); ++i) {
             System.out.println(i + ". " + names.get(i - 1));
         }
-        var index = inputIndex(0, names.size());
+        int index = inputIndex(0, names.size());
         if (index == 0) {
             return;
         }
@@ -53,13 +53,13 @@ public class TaskRunner {
             System.out.println("Package " + taskPackage.getName() + " is empty!");
             return;
         }
-        var names = taskPackage.getTasks().stream().map(Class::getName).toList();
+        List<String> names = taskPackage.getTasks().stream().map(Class::getName).toList();
         System.out.println("Select task to run: ");
         System.out.println("0. Exit");
         for (int i = 1; i <= names.size(); ++i) {
             System.out.println(i + ". " + names.get(i - 1));
         }
-        var index = inputIndex(0, names.size());
+        int index = inputIndex(0, names.size());
         if (index == 0) {
             return;
         }
@@ -74,21 +74,21 @@ public class TaskRunner {
 
     private void tryRunAgain() {
         System.out.println("Do you want to reselect package? yes/no");
-        var scanner = new Scanner(System.in);
-        var s = scanner.nextLine();
+        Scanner scanner = ScannerPool.get(System.in);
+        String s = scanner.nextLine();
         if (s.equals("yes"))
             run();
     }
     private void tryRunPackageAgain(TaskPackage tp) {
         System.out.println("Do you want to reselect task from package '" + tp.getName() + "'? yes/no");
-        var scanner = new Scanner(System.in);
-        var s = scanner.nextLine();
+        Scanner scanner = ScannerPool.get(System.in);
+        String s = scanner.nextLine();
         if (s.equals("yes"))
             runPackage(tp);
     }
 
     private int inputIndex(int lowerBound, int upperBound) {
-        int index = (int) ConsoleUtils.inputNumber(null);
+        int index = (int) ConsoleUtils.inputNumberLine(null);
         if (index < lowerBound || index > upperBound) {
             System.out.println("Wrong input! Try again: ");
             return inputIndex(lowerBound, upperBound);
@@ -147,11 +147,14 @@ public class TaskRunner {
     }
 
     private void removeTask(Class<? extends Task> task) {
-        for (var p: packages) {
+        for (TaskPackage p: packages) {
             if (p.getTasks().contains(task)) {
                 p.getTasks().remove(task);
                 return;
             }
         }
+    }
+    public List<TaskPackage> getPackages() {
+        return packages;
     }
 }

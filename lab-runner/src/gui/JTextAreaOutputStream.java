@@ -1,7 +1,6 @@
 package gui;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.io.OutputStream;
 
 public class JTextAreaOutputStream extends OutputStream {
@@ -12,7 +11,7 @@ public class JTextAreaOutputStream extends OutputStream {
     }
 
     @Override
-    public void write(int b) throws IOException {
+    public void write(int b) {
         area.append(String.valueOf((char)b));
     }
 }

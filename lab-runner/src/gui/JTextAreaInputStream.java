@@ -44,7 +44,7 @@ public class JTextAreaInputStream extends InputStream {
                 }
                 b[off + i] = (byte)c;
             }
-        } catch (IOException ee) {
+        } catch (IOException ignored) {
         }
         return i;
     }

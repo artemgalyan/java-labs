@@ -8,7 +8,7 @@ import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
 public class Scholarship extends JFrame {
-    private final String QUESTION = "Are you satisfied with your scholarship?";
+    private final String QUESTION = "Вы уважаете экономичку?";
 
     public Scholarship(String title) throws HeadlessException {
         super(title);
@@ -18,10 +18,10 @@ public class Scholarship extends JFrame {
         textLabel.setVerticalAlignment(SwingConstants.CENTER);
         add(textLabel, BorderLayout.NORTH);
         JPanel panel = new JPanel();
-        JButton yesButton = new JButton("Yes!");
+        JButton yesButton = new JButton("Да!");
         yesButton.setFont(new Font("Arial", Font.PLAIN, 15));
         panel.add(yesButton);
-        JButton noButton = new JButton("No!");
+        JButton noButton = new JButton("Нет!");
         noButton.setFont(new Font("Arial", Font.PLAIN, 15));
         panel.add(noButton);
 

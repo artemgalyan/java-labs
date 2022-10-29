@@ -11,6 +11,8 @@ import lab6.UtilsTask;
 import lab6.generics.StackTester;
 import lab7.ButtonDaD;
 import lab7.ScholarshipTask;
+import lab8.DrawingPanelTask;
+import tasks.Task;
 import tasks.TaskPackage;
 import tasks.TaskRunner;
 
@@ -34,8 +36,10 @@ public class Main {
         var lab7 = new TaskPackage("lab-7")
                 .addTask(ButtonDaD.class)
                 .addTask(ScholarshipTask.class);
+        var lab8 = new TaskPackage("lab-8")
+                .addTask(DrawingPanelTask.class);
         var taskRunner = new TaskRunner();
-        taskRunner.addPackage(lab3).addPackage(lab4).addPackage(lab5).addPackage(lab6).addPackage(lab7);
+        taskRunner.addPackage(lab3).addPackage(lab4).addPackage(lab5).addPackage(lab6).addPackage(lab7).addPackage(lab8);
         TaskRunnerGui runnerGui = new TaskRunnerGui(taskRunner.getPackages());
         runnerGui.setSize(900, 500);
         runnerGui.setLocation(100, 100);

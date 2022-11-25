@@ -1,0 +1,6 @@
+1 Artyom 2 3
+2 Artyom 4 2
+3 Vanya 2 1
+4 Nick 3 4
+5 Josh 9 1
+6 Vanya 4 5

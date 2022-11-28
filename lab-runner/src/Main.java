@@ -1,4 +1,5 @@
 import gui.TaskRunnerGui;
+import lab11.KeyDisplayerTask;
 import lab3.*;
 import lab4.*;
 import lab5.*;
@@ -38,8 +39,17 @@ public class Main {
                 .addTask(DrawingWidgetTask.class);
         var lab9 = new TaskPackage("lab-9")
                 .addTask(StudentsTask.class);
+        var lab11 = new TaskPackage("lab-11")
+                .addTask(KeyDisplayerTask.class);
         var taskRunner = new TaskRunner();
-        taskRunner.addPackage(lab3).addPackage(lab4).addPackage(lab5).addPackage(lab6).addPackage(lab7).addPackage(lab8).addPackage(lab9);
+        taskRunner.addPackage(lab3)
+                .addPackage(lab4)
+                .addPackage(lab5)
+                .addPackage(lab6)
+                .addPackage(lab7)
+                .addPackage(lab8)
+                .addPackage(lab9)
+                .addPackage(lab11);
         TaskRunnerGui runnerGui = new TaskRunnerGui(taskRunner.getPackages());
         runnerGui.setSize(900, 500);
         runnerGui.setLocation(100, 100);

@@ -33,4 +33,11 @@ public abstract class Collection<T> implements InputIterable<T> {
         listModel.addAll(getArrayList());
         return listModel;
     }
+
+    public boolean equals(Collection<? extends T> collection) {
+        if (collection == this) return true;
+        if (collection == null || collection.getClass() != getClass()) return false;
+        if (collection.size() != this.size()) return false;
+        return getArrayList().containsAll(collection.getArrayList());
+    }
 }

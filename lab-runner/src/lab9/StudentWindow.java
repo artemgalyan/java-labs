@@ -15,8 +15,11 @@ public class StudentWindow extends JFrame {
     private final DefaultListModel<Student> processedStudentsModel = new DefaultListModel<>();
     private final List<Student> studentList = new ArrayList<>();
 
-    public StudentWindow(String title) throws HeadlessException {
+    private Strategy<List<Student>, List<Student>> filter;
+
+    public StudentWindow(String title, Strategy<List<Student>, List<Student>> filter) throws HeadlessException {
         super(title);
+        this.filter = filter;
         studentsList = new JList<>(studentsModel);
         processedDataList = new JList<>(processedStudentsModel);
         addProcessButton();
@@ -27,6 +30,10 @@ public class StudentWindow extends JFrame {
         panel.add(processedDataList);
         add(panel);
         setupMenu();
+    }
+
+    public void setStrategy(Strategy<List<Student>, List<Student>> filter) {
+        this.filter = filter;
     }
 
     private void setupMenu() {
@@ -57,16 +64,10 @@ public class StudentWindow extends JFrame {
         JMenuItem addStudent = new JMenuItem("Add student");
         addStudent.setIcon(UIManager.getIcon("FileChooser.newFolderIcon"));
         addStudent.addActionListener(e -> {
-            String input = JOptionPane.showInputDialog("Input student (id name course group):");
-            if (input.isEmpty())
-                return;
-
-            try {
-                Student s = Student.fromString(input);
+            StudentBuilderFromDialog builder = new StudentBuilderFromDialog();
+            Student s = builder.inputFromDialog(this, "Input student");
+            if (s != null)
                 addStudent(s);
-            } catch (Exception exception) {
-                JOptionPane.showMessageDialog(this, "Wrong input", "Error!", JOptionPane.ERROR_MESSAGE);
-            }
         });
         JMenuItem help = new JMenuItem("Help");
         help.addActionListener(e -> {
@@ -86,7 +87,7 @@ public class StudentWindow extends JFrame {
         JButton button = new JButton("Process data");
         button.addActionListener(e -> {
             processedStudentsModel.clear();
-            List<Student> processed = StudentUtils.filterStudentsBySurname(studentList);
+            List<Student> processed = filter.apply(studentList);
             processedStudentsModel.addAll(processed);
         });
         add(button, BorderLayout.SOUTH);
